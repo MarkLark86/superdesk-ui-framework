@@ -7,8 +7,6 @@ yarn.lock
 app/.DS_Store
 examples/.DS_Store
 .vscode/
-dist
-react
 !examples/pages/react
 debug.log
 yarn-error.log
