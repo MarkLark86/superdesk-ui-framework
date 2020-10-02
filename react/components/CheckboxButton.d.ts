@@ -1,9 +1,7 @@
 import * as React from 'react';
 interface IProps {
     checked: boolean;
-    label: {
-        text: string;
-    };
+    label: string;
     icon?: string;
     iconOnly?: boolean;
     disabled?: boolean;

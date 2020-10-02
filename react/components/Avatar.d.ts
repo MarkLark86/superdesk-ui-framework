@@ -15,7 +15,7 @@ export declare class AvatarContentImage extends React.PureComponent<IImageAvatar
     render(): JSX.Element;
 }
 interface IPropsAvatarWrapper {
-    size?: 'small' | 'medium' | 'large';
+    size?: 'small' | 'medium' | 'large' | 'x-large' | 'xx-large';
     statusIndicator?: {
         status: 'online' | 'offline';
         tooltipText?: string;

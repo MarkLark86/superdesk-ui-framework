@@ -31,7 +31,7 @@ exports.DropdownFirst = function (_a) {
     var _d = React.useState(false), open = _d[0], setOpen = _d[1];
     var _e = React.useState(false), height = _e[0], setHeight = _e[1];
     var ref = React.useRef(null);
-    var inDebounce = 0;
+    var inDebounce;
     function calculate() {
         var number = getDimensions(ref.current);
         var second = screen.height;

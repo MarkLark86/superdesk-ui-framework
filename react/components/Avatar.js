@@ -78,6 +78,8 @@ var AvatarWrapper = /** @class */ (function (_super) {
                 'sd-avatar--small': this.props.size === 'small',
                 'sd-avatar--medium': this.props.size === 'medium' || this.props.size == null,
                 'sd-avatar--large': this.props.size === 'large',
+                'sd-avatar--x-large': this.props.size === 'x-large',
+                'sd-avatar--xx-large': this.props.size === 'xx-large',
             }), "data-test-id": this.props['data-test-id'] },
             this.props.children,
             this.props.statusIndicator != null

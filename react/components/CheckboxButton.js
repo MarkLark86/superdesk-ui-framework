@@ -60,8 +60,8 @@ var CheckboxButton = /** @class */ (function (_super) {
                         (this.props.checked ? ' checked' : '')), onClick: this.handleChange },
                 this.props.icon ? React.createElement("i", { className: "icon-" + this.props.icon }) : null,
                 this.props.disabled ?
-                    (React.createElement("label", { className: 'sd-check-button__text-label sd-label--disabled', "aria-label": this.props.iconOnly ? this.props.label.text : '', htmlFor: this.htmlId }, !this.props.iconOnly ? this.props.label.text : null)) :
-                    (React.createElement("label", { className: 'sd-check-button__text-label', "aria-label": this.props.iconOnly ? this.props.label.text : '', htmlFor: this.htmlId }, !this.props.iconOnly ? this.props.label.text : null)))));
+                    (React.createElement("label", { className: 'sd-check-button__text-label sd-label--disabled ' + (this.props.iconOnly ? 'visuallyhidden' : ''), "aria-label": this.props.iconOnly ? this.props.label : '', htmlFor: this.htmlId }, !this.props.iconOnly ? this.props.label : null)) :
+                    (React.createElement("label", { className: 'sd-check-button__text-label ' + (this.props.iconOnly ? 'visuallyhidden' : ''), "aria-label": this.props.iconOnly ? this.props.label : '', htmlFor: this.htmlId }, !this.props.iconOnly ? this.props.label : null)))));
     };
     return CheckboxButton;
 }(React.PureComponent));

@@ -3508,6 +3508,11 @@ pre[class*="language-"] {
   [data-theme="dark-ui"] [class*=" big-icon--"] {
     color: #fff; }
 
+[class^="--dark-ui"],
+[class*="--dark-ui"] {
+  --color-contrast-bg:        #333;
+  --color-contrast-bg--hover: #383838; }
+
 [data-theme="accessible-light-ui"] {
   --font-size-large: 1.5rem;
   --color-accessible-text:    #111;
@@ -4336,6 +4341,9 @@ pre[class*="language-"] {
 
 .icon-arrow-small:before {
   content: ""; }
+
+.icon-clear-all:before {
+  content: ""; }
 
 .icn-mix {
   position: relative;
@@ -6760,6 +6768,11 @@ pre[class*="language-"] {
   [data-theme="dark-ui"] [class*=" big-icon--"] {
     color: #fff; }
 
+[class^="--dark-ui"],
+[class*="--dark-ui"] {
+  --color-contrast-bg:        #333;
+  --color-contrast-bg--hover: #383838; }
+
 [data-theme="accessible-light-ui"] {
   --font-size-large: 1.5rem;
   --color-accessible-text:    #111;
@@ -7157,3 +7170,6 @@ pre[class*="language-"] {
 
 .big-icon--publisher:before {
   content: ""; }
+
+.big-icon--tag:before {
+  content: ""; }
