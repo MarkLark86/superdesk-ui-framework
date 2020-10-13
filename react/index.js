@@ -100,3 +100,7 @@ var Autocomplete_1 = require("./components/Autocomplete");
 Object.defineProperty(exports, "Autocomplete", { enumerable: true, get: function () { return Autocomplete_1.Autocomplete; } });
 var DonutChart_1 = require("./components/DonutChart");
 Object.defineProperty(exports, "DonutChart", { enumerable: true, get: function () { return DonutChart_1.DonutChart; } });
+var TagInput_1 = require("./components/TagInput");
+Object.defineProperty(exports, "TagInput", { enumerable: true, get: function () { return TagInput_1.TagInput; } });
+var TagInputTest_1 = require("./components/TagInputTest");
+Object.defineProperty(exports, "TagInputTest", { enumerable: true, get: function () { return TagInputTest_1.TagInputTest; } });
