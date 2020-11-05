@@ -50,20 +50,33 @@ var react_id_generator_1 = __importDefault(require("react-id-generator"));
 var Autocomplete = /** @class */ (function (_super) {
     __extends(Autocomplete, _super);
     function Autocomplete(props) {
-        var _a;
+        var _a, _b;
         var _this = _super.call(this, props) || this;
         _this.htmlId = react_id_generator_1.default();
         _this.state = {
-            selectedItem: null,
+            selectedItem: (_a = _this.props.value) !== null && _a !== void 0 ? _a : null,
             filteredItems: null,
-            invalid: (_a = _this.props.invalid) !== null && _a !== void 0 ? _a : false,
+            invalid: (_b = _this.props.invalid) !== null && _b !== void 0 ? _b : false,
         };
         _this.searchItem = _this.searchItem.bind(_this);
-        _this.itemTemplate = _this.itemTemplate.bind(_this);
         return _this;
     }
+    Autocomplete.prototype.search = function (term) {
+        var _this = this;
+        var _a;
+        if (!this.props.search) {
+            return;
+        }
+        (_a = this.latestCall) === null || _a === void 0 ? void 0 : _a.cancel();
+        this.latestCall = this.props.search(term, function (results) {
+            _this.setState({ filteredItems: results });
+        });
+    };
     Autocomplete.prototype.searchItem = function (event) {
         var _this = this;
+        if (this.props.search) {
+            return this.search(event.query);
+        }
         setTimeout(function () {
             var filteredItems;
             if (!event.query.trim().length) {
@@ -80,13 +93,15 @@ var Autocomplete = /** @class */ (function (_super) {
             _this.setState({ filteredItems: filteredItems });
         }, 250);
     };
-    Autocomplete.prototype.itemTemplate = function (item) {
-        return (React.createElement("div", null,
-            React.createElement("div", null, this.props.keyValue ? item[this.props.keyValue] : item)));
-    };
     Autocomplete.prototype.handleChange = function (event) {
         this.setState({ selectedItem: event.value });
         this.props.onChange(event.value);
+    };
+    Autocomplete.prototype.handleSelect = function (event) {
+        this.setState({ selectedItem: event.value });
+        if (this.props.onSelect) {
+            this.props.onSelect(event.value);
+        }
     };
     Autocomplete.prototype.render = function () {
         var _this = this;
@@ -98,7 +113,7 @@ var Autocomplete = /** @class */ (function (_super) {
         });
         return (React.createElement("div", { className: classes },
             this.props.label ? React.createElement("label", { className: 'sd-input__label', htmlFor: this.htmlId }, this.props.label) : null,
-            React.createElement(autocomplete_1.AutoComplete, { id: this.htmlId, inputClassName: 'sd-input__input', value: this.state.selectedItem, suggestions: this.state.filteredItems, completeMethod: this.searchItem, field: this.props.keyValue, disabled: this.props.disabled, minLength: this.props.minLength ? this.props.minLength : 1, onChange: function (event) { return _this.handleChange(event); } }),
+            React.createElement(autocomplete_1.AutoComplete, { id: this.htmlId, inputClassName: 'sd-input__input', value: this.state.selectedItem, suggestions: this.state.filteredItems, completeMethod: this.searchItem, itemTemplate: this.props.listItemTemplate, field: this.props.keyValue, disabled: this.props.disabled, minLength: this.props.minLength ? this.props.minLength : 1, onChange: function (event) { return _this.handleChange(event); }, onSelect: function (event) { return _this.handleSelect(event); } }),
             React.createElement("div", { className: 'sd-input__message-box' },
                 this.props.info && !this.props.invalid && !this.state.invalid ?
                     React.createElement("div", { className: 'sd-input__hint' }, this.props.info) : null,

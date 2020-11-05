@@ -3,6 +3,7 @@ interface IProps {
     items: Array<any>;
     keyValue?: string;
     minLength?: number;
+    value?: string | object;
     label?: string;
     info?: string;
     error?: string;
@@ -10,7 +11,12 @@ interface IProps {
     disabled?: boolean;
     invalid?: boolean;
     inlineLabel?: boolean;
+    listItemTemplate?(value: any): any;
+    search?(searhString: string, callback: (result: Array<any>) => void): {
+        cancel: () => void;
+    };
     onChange(newValue: string): void;
+    onSelect?(suggestion: string): void;
 }
 interface IState {
     selectedItem: any;
@@ -18,11 +24,18 @@ interface IState {
     invalid: boolean;
 }
 export declare class Autocomplete extends React.Component<IProps, IState> {
+    latestCall?: {
+        cancel: () => void;
+    };
     constructor(props: IProps);
     htmlId: string;
+    search(term: string): void;
     searchItem(event: any): void;
-    itemTemplate(item: any): JSX.Element;
     handleChange(event: {
+        originalEvent: Event;
+        value: any;
+    }): void;
+    handleSelect(event: {
         originalEvent: Event;
         value: any;
     }): void;
