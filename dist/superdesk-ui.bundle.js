@@ -5851,10 +5851,12 @@ var IconLabel_1 = __webpack_require__(226);
 Object.defineProperty(exports, "IconLabel", { enumerable: true, get: function () { return IconLabel_1.IconLabel; } });
 var Tooltip_1 = __webpack_require__(227);
 Object.defineProperty(exports, "Tooltip", { enumerable: true, get: function () { return Tooltip_1.Tooltip; } });
-var DatePicker_1 = __webpack_require__(47);
+var DatePicker_1 = __webpack_require__(34);
 Object.defineProperty(exports, "DatePicker", { enumerable: true, get: function () { return DatePicker_1.DatePicker; } });
-var DatePicker_2 = __webpack_require__(47);
+var DatePicker_2 = __webpack_require__(34);
 Object.defineProperty(exports, "DatePickerISO", { enumerable: true, get: function () { return DatePicker_2.DatePickerISO; } });
+var DatePicker_3 = __webpack_require__(34);
+Object.defineProperty(exports, "DatePickerLocaleSettings", { enumerable: true, get: function () { return DatePicker_3.DatePickerLocaleSettings; } });
 var TimePicker_1 = __webpack_require__(207);
 Object.defineProperty(exports, "TimePicker", { enumerable: true, get: function () { return TimePicker_1.TimePicker; } });
 var FormLabel_1 = __webpack_require__(257);
@@ -25122,6 +25124,184 @@ exports.AvatarWrapper = AvatarWrapper;
 
 /***/ }),
 /* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DatePickerISO = exports.DatePicker = void 0;
+var React = __importStar(__webpack_require__(1));
+var addDays_1 = __importDefault(__webpack_require__(228));
+var format_1 = __importDefault(__webpack_require__(229));
+var calendar_1 = __webpack_require__(253);
+var lodash_1 = __webpack_require__(28);
+var internalPrimereactClassnames = {
+    overlayVisible: 'p-input-overlay-visible',
+};
+// tries to parse primereact/calendar value format to IDatePicker['value']
+function parseFromPrimeReactCalendarFormat(value) {
+    if (Array.isArray(value)) {
+        return 'failed-to-parse'; // arrays aren't supported
+    }
+    else if (value instanceof Date) {
+        return value;
+    }
+    else if (value === '') {
+        return null;
+    }
+    else {
+        // at this point value is a free input string that can't be parsed to a Date inside primereact/calendar
+        return 'failed-to-parse';
+    }
+}
+function parseToPrimeReactCalendarFormat(value) {
+    return value === null ? undefined : value;
+}
+var DatePicker = /** @class */ (function (_super) {
+    __extends(DatePicker, _super);
+    function DatePicker(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            value: parseToPrimeReactCalendarFormat(_this.props.value),
+            valid: true,
+        };
+        _this.hidePopupOnScroll = lodash_1.throttle(function () {
+            if (_this.instance != null
+                && _this.instance.panel != null
+                && _this.instance.hideOverlay != null
+                && _this.instance.panel.classList.contains(internalPrimereactClassnames.overlayVisible)) {
+                _this.instance.hideOverlay();
+            }
+        }, 300);
+        return _this;
+    }
+    DatePicker.prototype.componentDidMount = function () {
+        document.addEventListener('scroll', this.hidePopupOnScroll, true);
+    };
+    DatePicker.prototype.componentWillUnmount = function () {
+        document.removeEventListener('scroll', this.hidePopupOnScroll);
+    };
+    DatePicker.prototype.componentDidUpdate = function (prevProps) {
+        // sync internal state with props
+        // the check is more complex than a === b, because value equality is checked rather than reference equality
+        // which prevents infinite loops that may happen otherwise
+        if (this.props.value === null || prevProps.value === null) {
+            // at least one of the values is null so strict comparison can be used
+            if (this.props.value !== prevProps.value) {
+                this.setState({ value: parseToPrimeReactCalendarFormat(this.props.value), valid: true });
+            }
+        }
+        else if (this.props.value.getTime() !== prevProps.value.getTime()) { // comparing by value
+            this.setState({ value: parseToPrimeReactCalendarFormat(this.props.value), valid: true });
+        }
+    };
+    DatePicker.prototype.render = function () {
+        var _this = this;
+        var locale;
+        if (this.props.locale != null) {
+            locale = __assign(__assign({}, this.props.locale), { today: 'today', clear: 'clear' });
+        }
+        return (
+        // a patch for primereact/calendar is used for fixing https://github.com/primefaces/primereact/issues/1086
+        React.createElement(calendar_1.Calendar, { ref: function (ref) {
+                _this.instance = ref;
+            }, value: this.state.value === null ? undefined : this.state.value, onChange: function (event) {
+                var result = parseFromPrimeReactCalendarFormat(event.value);
+                if (result !== 'failed-to-parse') {
+                    _this.setState({ value: event.value, valid: true });
+                    _this.props.onChange(result);
+                }
+                else {
+                    // updating internal state so a user can continue typing and enter a valid value
+                    _this.setState({ value: event.value, valid: false });
+                }
+            }, locale: locale, dateFormat: this.props.dateFormat.replace('YYYY', 'yy').replace('MM', 'mm').replace('DD', 'dd'), showIcon: true, icon: "icon-calendar", headerTemplate: function () { return _this.props.shortcuts == null ? null : (React.createElement("div", { style: { display: 'flex', justifyContent: 'space-between', marginBottom: 10 } }, _this.props.shortcuts.map(function (_a, i) {
+                var label = _a.label, days = _a.days;
+                return (React.createElement("button", { key: i, className: "btn btn--hollow btn--small", onClick: function () {
+                        _this.props.onChange(addDays_1.default(new Date(), days));
+                        if (_this.instance != null && typeof _this.instance.hideOverlay === 'function') {
+                            _this.instance.hideOverlay();
+                        }
+                    } }, label));
+            }))); }, appendTo: document.body, disabled: this.props.disabled, onBlur: function () {
+                if (_this.state.valid === false) {
+                    // restoring internal state to current props value
+                    _this.setState({ valid: true, value: parseToPrimeReactCalendarFormat(_this.props.value) });
+                }
+            } }));
+    };
+    return DatePicker;
+}(React.PureComponent));
+exports.DatePicker = DatePicker;
+var DatePickerISO = /** @class */ (function (_super) {
+    __extends(DatePickerISO, _super);
+    function DatePickerISO() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    DatePickerISO.prototype.render = function () {
+        var _this = this;
+        return (React.createElement(DatePicker, { value: new Date(this.props.value), onChange: function (value) {
+                if (value === null) {
+                    _this.props.onChange('');
+                }
+                else {
+                    _this.props.onChange(format_1.default(value, 'yyyy-MM-dd'));
+                }
+            }, disabled: this.props.disabled, shortcuts: this.props.shortcuts, dateFormat: this.props.dateFormat, locale: this.props.locale }));
+    };
+    return DatePickerISO;
+}(React.PureComponent));
+exports.DatePickerISO = DatePickerISO;
+
+
+/***/ }),
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25145,7 +25325,7 @@ function startOfUTCISOWeek(dirtyDate) {
 }
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25180,7 +25360,7 @@ function startOfUTCWeek(dirtyDate, dirtyOptions) {
 }
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25274,7 +25454,7 @@ function effect(_ref2) {
 });
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25291,7 +25471,7 @@ function getLayoutRect(element) {
 }
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25301,7 +25481,7 @@ function getMainAxisFromPlacement(placement) {
 }
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25453,7 +25633,7 @@ function computeStyles(_ref3) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6)))
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25509,14 +25689,14 @@ function effect(_ref) {
 });
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = getWindowScrollBarX;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getBoundingClientRect_js__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getDocumentElement_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getWindowScroll_js__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getWindowScroll_js__ = __webpack_require__(43);
 
 
 
@@ -25532,7 +25712,7 @@ function getWindowScrollBarX(element) {
 }
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25550,7 +25730,7 @@ function getWindowScroll(node) {
 }
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25568,7 +25748,7 @@ function isScrollParent(element) {
 }
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25600,14 +25780,14 @@ function popperOffsets(_ref) {
 });
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony export (immutable) */ __webpack_exports__["c"] = popperGenerator;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createPopper; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dom_utils_getCompositeRect_js__ = __webpack_require__(286);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dom_utils_getLayoutRect_js__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dom_utils_getLayoutRect_js__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dom_utils_listScrollParents_js__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dom_utils_getOffsetParent_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dom_utils_getComputedStyle_js__ = __webpack_require__(18);
@@ -25882,185 +26062,7 @@ var createPopper = /*#__PURE__*/popperGenerator(); // eslint-disable-next-line i
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6)))
 
 /***/ }),
-/* 46 */,
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.DatePickerISO = exports.DatePicker = void 0;
-var React = __importStar(__webpack_require__(1));
-var addDays_1 = __importDefault(__webpack_require__(228));
-var format_1 = __importDefault(__webpack_require__(229));
-var calendar_1 = __webpack_require__(253);
-var lodash_1 = __webpack_require__(28);
-var internalPrimereactClassnames = {
-    overlayVisible: 'p-input-overlay-visible',
-};
-// tries to parse primereact/calendar value format to IDatePicker['value']
-function parseFromPrimeReactCalendarFormat(value) {
-    if (Array.isArray(value)) {
-        return 'failed-to-parse'; // arrays aren't supported
-    }
-    else if (value instanceof Date) {
-        return value;
-    }
-    else if (value === '') {
-        return null;
-    }
-    else {
-        // at this point value is a free input string that can't be parsed to a Date inside primereact/calendar
-        return 'failed-to-parse';
-    }
-}
-function parseToPrimeReactCalendarFormat(value) {
-    return value === null ? undefined : value;
-}
-var DatePicker = /** @class */ (function (_super) {
-    __extends(DatePicker, _super);
-    function DatePicker(props) {
-        var _this = _super.call(this, props) || this;
-        _this.state = {
-            value: parseToPrimeReactCalendarFormat(_this.props.value),
-            valid: true,
-        };
-        _this.hidePopupOnScroll = lodash_1.throttle(function () {
-            if (_this.instance != null
-                && _this.instance.panel != null
-                && _this.instance.hideOverlay != null
-                && _this.instance.panel.classList.contains(internalPrimereactClassnames.overlayVisible)) {
-                _this.instance.hideOverlay();
-            }
-        }, 300);
-        return _this;
-    }
-    DatePicker.prototype.componentDidMount = function () {
-        document.addEventListener('scroll', this.hidePopupOnScroll, true);
-    };
-    DatePicker.prototype.componentWillUnmount = function () {
-        document.removeEventListener('scroll', this.hidePopupOnScroll);
-    };
-    DatePicker.prototype.componentDidUpdate = function (prevProps) {
-        // sync internal state with props
-        // the check is more complex than a === b, because value equality is checked rather than reference equality
-        // which prevents infinite loops that may happen otherwise
-        if (this.props.value === null || prevProps.value === null) {
-            // at least one of the values is null so strict comparison can be used
-            if (this.props.value !== prevProps.value) {
-                this.setState({ value: parseToPrimeReactCalendarFormat(this.props.value), valid: true });
-            }
-        }
-        else if (this.props.value.getTime() !== prevProps.value.getTime()) { // comparing by value
-            this.setState({ value: parseToPrimeReactCalendarFormat(this.props.value), valid: true });
-        }
-    };
-    DatePicker.prototype.render = function () {
-        var _this = this;
-        var locale;
-        if (this.props.locale != null) {
-            locale = __assign(__assign({}, this.props.locale), { today: 'today', clear: 'clear' });
-        }
-        return (
-        // a patch for primereact/calendar is used for fixing https://github.com/primefaces/primereact/issues/1086
-        React.createElement(calendar_1.Calendar, { ref: function (ref) {
-                _this.instance = ref;
-            }, value: this.state.value === null ? undefined : this.state.value, onChange: function (event) {
-                var result = parseFromPrimeReactCalendarFormat(event.value);
-                if (result !== 'failed-to-parse') {
-                    _this.setState({ value: event.value, valid: true });
-                    _this.props.onChange(result);
-                }
-                else {
-                    // updating internal state so a user can continue typing and enter a valid value
-                    _this.setState({ value: event.value, valid: false });
-                }
-            }, locale: locale, dateFormat: this.props.dateFormat.replace('YYYY', 'yy').replace('MM', 'mm').replace('DD', 'dd'), showIcon: true, icon: "icon-calendar", headerTemplate: function () { return _this.props.shortcuts == null ? null : (React.createElement("div", { style: { display: 'flex', justifyContent: 'space-between', marginBottom: 10 } }, _this.props.shortcuts.map(function (_a, i) {
-                var label = _a.label, days = _a.days;
-                return (React.createElement("button", { key: i, className: "btn btn--hollow btn--small", onClick: function () {
-                        _this.props.onChange(addDays_1.default(new Date(), days));
-                        if (_this.instance != null && typeof _this.instance.hideOverlay === 'function') {
-                            _this.instance.hideOverlay();
-                        }
-                    } }, label));
-            }))); }, appendTo: document.body, disabled: this.props.disabled, onBlur: function () {
-                if (_this.state.valid === false) {
-                    // restoring internal state to current props value
-                    _this.setState({ valid: true, value: parseToPrimeReactCalendarFormat(_this.props.value) });
-                }
-            } }));
-    };
-    return DatePicker;
-}(React.PureComponent));
-exports.DatePicker = DatePicker;
-var DatePickerISO = /** @class */ (function (_super) {
-    __extends(DatePickerISO, _super);
-    function DatePickerISO() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    DatePickerISO.prototype.render = function () {
-        var _this = this;
-        return (React.createElement(DatePicker, { value: new Date(this.props.value), onChange: function (value) {
-                if (value === null) {
-                    _this.props.onChange('');
-                }
-                else {
-                    _this.props.onChange(format_1.default(value, 'yyyy-MM-dd'));
-                }
-            }, disabled: this.props.disabled, shortcuts: this.props.shortcuts, dateFormat: this.props.dateFormat, locale: this.props.locale }));
-    };
-    return DatePickerISO;
-}(React.PureComponent));
-exports.DatePickerISO = DatePickerISO;
-
-
-/***/ }),
+/* 47 */,
 /* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -26084,7 +26086,7 @@ function addLeadingZeros(number, targetLength) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = getUTCISOWeekYear;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__toDate_index_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__startOfUTCISOWeek_index_js__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__startOfUTCISOWeek_index_js__ = __webpack_require__(35);
 
  // This function will be a part of public API when UTC function will be implemented.
 // See issue: https://github.com/date-fns/date-fns/issues/376
@@ -26122,7 +26124,7 @@ function getUTCISOWeekYear(dirtyDate) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = getUTCWeekYear;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__toInteger_index_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__toDate_index_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__startOfUTCWeek_index_js__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__startOfUTCWeek_index_js__ = __webpack_require__(36);
 
 
  // This function will be a part of public API when UTC function will be implemented.
@@ -26546,7 +26548,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "offset", function() { return __WEBPACK_IMPORTED_MODULE_1__modifiers_index_js__["g"]; });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "popperOffsets", function() { return __WEBPACK_IMPORTED_MODULE_1__modifiers_index_js__["h"]; });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "preventOverflow", function() { return __WEBPACK_IMPORTED_MODULE_1__modifiers_index_js__["i"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__createPopper_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__createPopper_js__ = __webpack_require__(46);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "popperGenerator", function() { return __WEBPACK_IMPORTED_MODULE_2__createPopper_js__["c"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "detectOverflow", function() { return __WEBPACK_IMPORTED_MODULE_2__createPopper_js__["b"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createPopperBase", function() { return __WEBPACK_IMPORTED_MODULE_2__createPopper_js__["a"]; });
@@ -26568,13 +26570,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__applyStyles_js__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__applyStyles_js__ = __webpack_require__(37);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__applyStyles_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__arrow_js__ = __webpack_require__(55);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__arrow_js__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__computeStyles_js__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__computeStyles_js__ = __webpack_require__(40);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2__computeStyles_js__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__eventListeners_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__eventListeners_js__ = __webpack_require__(41);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__eventListeners_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__flip_js__ = __webpack_require__(61);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_4__flip_js__["a"]; });
@@ -26582,7 +26584,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_5__hide_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__offset_js__ = __webpack_require__(66);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_6__offset_js__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__popperOffsets_js__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__popperOffsets_js__ = __webpack_require__(45);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_7__popperOffsets_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__preventOverflow_js__ = __webpack_require__(67);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_8__preventOverflow_js__["a"]; });
@@ -26602,10 +26604,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_getBasePlacement_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dom_utils_getLayoutRect_js__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dom_utils_getLayoutRect_js__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dom_utils_contains_js__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dom_utils_getOffsetParent_js__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_getMainAxisFromPlacement_js__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_getMainAxisFromPlacement_js__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_within_js__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_mergePaddingObject_js__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_expandToHashMap_js__ = __webpack_require__(60);
@@ -26963,7 +26965,7 @@ function flip(_ref) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getParentNode_js__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getNodeName_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__getWindow_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__isScrollParent_js__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__isScrollParent_js__ = __webpack_require__(44);
 
 
 
@@ -27013,7 +27015,7 @@ function rectToClientRect(rect) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = computeOffsets;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getBasePlacement_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getVariation_js__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getMainAxisFromPlacement_js__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getMainAxisFromPlacement_js__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__enums_js__ = __webpack_require__(4);
 
 
@@ -27224,10 +27226,10 @@ function offset(_ref2) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__enums_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_getBasePlacement_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_getMainAxisFromPlacement_js__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_getMainAxisFromPlacement_js__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_getAltAxis_js__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_within_js__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__dom_utils_getLayoutRect_js__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__dom_utils_getLayoutRect_js__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__dom_utils_getOffsetParent_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_detectOverflow_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_getVariation_js__ = __webpack_require__(27);
@@ -27359,11 +27361,11 @@ function preventOverflow(_ref) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createPopper; });
 /* unused harmony export defaultModifiers */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createPopper_js__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modifiers_eventListeners_js__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modifiers_popperOffsets_js__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modifiers_computeStyles_js__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modifiers_applyStyles_js__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createPopper_js__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modifiers_eventListeners_js__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modifiers_popperOffsets_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modifiers_computeStyles_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modifiers_applyStyles_js__ = __webpack_require__(37);
 /* unused harmony reexport popperGenerator */
 /* unused harmony reexport detectOverflow */
 
@@ -46843,7 +46845,7 @@ function getUTCDayOfYear(dirtyDate) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = getUTCISOWeek;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__toDate_index_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__startOfUTCISOWeek_index_js__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__startOfUTCISOWeek_index_js__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__startOfUTCISOWeekYear_index_js__ = __webpack_require__(247);
 
 
@@ -46871,7 +46873,7 @@ function getUTCISOWeek(dirtyDate) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = startOfUTCISOWeekYear;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getUTCISOWeekYear_index_js__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__startOfUTCISOWeek_index_js__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__startOfUTCISOWeek_index_js__ = __webpack_require__(35);
 
  // This function will be a part of public API when UTC function will be implemented.
 // See issue: https://github.com/date-fns/date-fns/issues/376
@@ -46896,7 +46898,7 @@ function startOfUTCISOWeekYear(dirtyDate) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = getUTCWeek;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__toDate_index_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__startOfUTCWeek_index_js__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__startOfUTCWeek_index_js__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__startOfUTCWeekYear_index_js__ = __webpack_require__(249);
 
 
@@ -46925,7 +46927,7 @@ function getUTCWeek(dirtyDate, options) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = startOfUTCWeekYear;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__toInteger_index_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getUTCWeekYear_index_js__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__startOfUTCWeek_index_js__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__startOfUTCWeek_index_js__ = __webpack_require__(36);
 
 
  // This function will be a part of public API when UTC function will be implemented.
@@ -51422,7 +51424,7 @@ function getClippingRect(element, boundary, rootBoundary) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = getViewportRect;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getWindow_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getDocumentElement_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getWindowScrollBarX_js__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getWindowScrollBarX_js__ = __webpack_require__(42);
 
 
 
@@ -51472,8 +51474,8 @@ function getViewportRect(element) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = getDocumentRect;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getDocumentElement_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getComputedStyle_js__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getWindowScrollBarX_js__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__getWindowScroll_js__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getWindowScrollBarX_js__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__getWindowScroll_js__ = __webpack_require__(43);
 
 
 
@@ -51508,7 +51510,7 @@ function getDocumentRect(element) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = getScrollParent;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getParentNode_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isScrollParent_js__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isScrollParent_js__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getNodeName_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__instanceOf_js__ = __webpack_require__(8);
 
@@ -51612,9 +51614,9 @@ function getAltAxis(axis) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getNodeScroll_js__ = __webpack_require__(287);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__getNodeName_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__instanceOf_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getWindowScrollBarX_js__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getWindowScrollBarX_js__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__getDocumentElement_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__isScrollParent_js__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__isScrollParent_js__ = __webpack_require__(44);
 
 
 
@@ -51670,7 +51672,7 @@ function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = getNodeScroll;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getWindowScroll_js__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getWindowScroll_js__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getWindow_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__instanceOf_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__getHTMLElementScroll_js__ = __webpack_require__(288);
@@ -51920,11 +51922,11 @@ function mergeByName(modifiers) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createPopper; });
 /* unused harmony export defaultModifiers */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createPopper_js__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modifiers_eventListeners_js__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modifiers_popperOffsets_js__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modifiers_computeStyles_js__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modifiers_applyStyles_js__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createPopper_js__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modifiers_eventListeners_js__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modifiers_popperOffsets_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modifiers_computeStyles_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modifiers_applyStyles_js__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modifiers_offset_js__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modifiers_flip_js__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modifiers_preventOverflow_js__ = __webpack_require__(67);
