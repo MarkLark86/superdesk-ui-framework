@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 441);
+/******/ 	return __webpack_require__(__webpack_require__.s = 442);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -25901,6 +25901,17 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -25930,66 +25941,6 @@ var addDays_1 = __importDefault(__webpack_require__(228));
 var format_1 = __importDefault(__webpack_require__(229));
 var calendar_1 = __webpack_require__(253);
 var lodash_1 = __webpack_require__(28);
-var currentLocale = {
-    firstDayOfWeek: 1,
-    dayNames: [
-        new Intl.DateTimeFormat(undefined, { weekday: 'long' }).format(new Date('2000-01-01')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'long' }).format(new Date('2000-01-02')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'long' }).format(new Date('2000-01-03')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'long' }).format(new Date('2000-01-04')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'long' }).format(new Date('2000-01-05')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'long' }).format(new Date('2000-01-06')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'long' }).format(new Date('2000-01-07')),
-    ],
-    dayNamesShort: [
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-01')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-02')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-03')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-04')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-05')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-06')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-07')),
-    ],
-    dayNamesMin: [
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-01')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-02')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-03')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-04')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-05')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-06')),
-        new Intl.DateTimeFormat(undefined, { weekday: 'short' }).format(new Date('2000-01-07')),
-    ],
-    monthNames: [
-        new Intl.DateTimeFormat(undefined, { month: 'long' }).format(new Date('2000-01-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'long' }).format(new Date('2000-02-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'long' }).format(new Date('2000-03-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'long' }).format(new Date('2000-04-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'long' }).format(new Date('2000-05-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'long' }).format(new Date('2000-06-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'long' }).format(new Date('2000-07-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'long' }).format(new Date('2000-08-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'long' }).format(new Date('2000-09-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'long' }).format(new Date('2000-10-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'long' }).format(new Date('2000-11-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'long' }).format(new Date('2000-12-01')),
-    ],
-    monthNamesShort: [
-        new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date('2000-01-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date('2000-02-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date('2000-03-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date('2000-04-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date('2000-05-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date('2000-06-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date('2000-07-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date('2000-08-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date('2000-09-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date('2000-10-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date('2000-11-01')),
-        new Intl.DateTimeFormat(undefined, { month: 'short' }).format(new Date('2000-12-01')),
-    ],
-    today: 'today',
-    clear: 'clear',
-};
 var internalPrimereactClassnames = {
     overlayVisible: 'p-input-overlay-visible',
 };
@@ -26052,6 +26003,10 @@ var DatePicker = /** @class */ (function (_super) {
     };
     DatePicker.prototype.render = function () {
         var _this = this;
+        var locale;
+        if (this.props.locale != null) {
+            locale = __assign(__assign({}, this.props.locale), { today: 'today', clear: 'clear' });
+        }
         return (
         // a patch for primereact/calendar is used for fixing https://github.com/primefaces/primereact/issues/1086
         React.createElement(calendar_1.Calendar, { ref: function (ref) {
@@ -26066,7 +26021,7 @@ var DatePicker = /** @class */ (function (_super) {
                     // updating internal state so a user can continue typing and enter a valid value
                     _this.setState({ value: event.value, valid: false });
                 }
-            }, locale: currentLocale, dateFormat: this.props.dateFormat.replace('YYYY', 'yy').replace('MM', 'mm').replace('DD', 'dd'), showIcon: true, icon: "icon-calendar", headerTemplate: function () { return _this.props.shortcuts == null ? null : (React.createElement("div", { style: { display: 'flex', justifyContent: 'space-between', marginBottom: 10 } }, _this.props.shortcuts.map(function (_a, i) {
+            }, locale: locale, dateFormat: this.props.dateFormat.replace('YYYY', 'yy').replace('MM', 'mm').replace('DD', 'dd'), showIcon: true, icon: "icon-calendar", headerTemplate: function () { return _this.props.shortcuts == null ? null : (React.createElement("div", { style: { display: 'flex', justifyContent: 'space-between', marginBottom: 10 } }, _this.props.shortcuts.map(function (_a, i) {
                 var label = _a.label, days = _a.days;
                 return (React.createElement("button", { key: i, className: "btn btn--hollow btn--small", onClick: function () {
                         _this.props.onChange(addDays_1.default(new Date(), days));
@@ -26098,7 +26053,7 @@ var DatePickerISO = /** @class */ (function (_super) {
                 else {
                     _this.props.onChange(format_1.default(value, 'yyyy-MM-dd'));
                 }
-            }, disabled: this.props.disabled, shortcuts: this.props.shortcuts, dateFormat: this.props.dateFormat }));
+            }, disabled: this.props.disabled, shortcuts: this.props.shortcuts, dateFormat: this.props.dateFormat, locale: this.props.locale }));
     };
     return DatePickerISO;
 }(React.PureComponent));
@@ -73545,7 +73500,8 @@ Popper.Defaults = Defaults;
 /* 438 */,
 /* 439 */,
 /* 440 */,
-/* 441 */
+/* 441 */,
+/* 442 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73802,53 +73758,53 @@ Object.defineProperty(exports, 'Dropdown', {
     }
 });
 
-__webpack_require__(442);
+__webpack_require__(443);
 
-__webpack_require__(477);
+__webpack_require__(478);
 
 exports.default = angular.module('superdesk-ui', ['superdesk-ui.helper', 'superdesk-ui.carousel', 'superdesk-ui.wizard', 'superdesk-ui.dropdown', 'superdesk-ui.positioner', 'superdesk-ui.modals', 'superdesk-ui.switch', 'superdesk-ui.check', 'superdesk-ui.circularProgress', 'superdesk-ui.toggleBox', 'superdesk-ui.toggleBoxNext', 'superdesk-ui.tags', 'superdesk-ui.lineInput', 'superdesk-ui.searchHandler', 'superdesk-ui.splitter', 'superdesk-ui.mediaQuery']);
 
 /***/ }),
-/* 442 */
+/* 443 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(443);
+__webpack_require__(444);
 
-__webpack_require__(457);
-
-__webpack_require__(459);
+__webpack_require__(458);
 
 __webpack_require__(460);
 
-__webpack_require__(319);
-
 __webpack_require__(461);
+
+__webpack_require__(319);
 
 __webpack_require__(462);
 
 __webpack_require__(463);
 
-__webpack_require__(318);
-
 __webpack_require__(464);
 
-__webpack_require__(467);
+__webpack_require__(318);
 
-__webpack_require__(469);
+__webpack_require__(465);
 
-__webpack_require__(471);
+__webpack_require__(468);
 
-__webpack_require__(473);
+__webpack_require__(470);
 
-__webpack_require__(475);
+__webpack_require__(472);
+
+__webpack_require__(474);
 
 __webpack_require__(476);
 
+__webpack_require__(477);
+
 /***/ }),
-/* 443 */
+/* 444 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73858,22 +73814,22 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-__webpack_require__(444);
-
 __webpack_require__(445);
 
-__webpack_require__(451);
+__webpack_require__(446);
 
 __webpack_require__(452);
 
-__webpack_require__(455);
+__webpack_require__(453);
 
 __webpack_require__(456);
+
+__webpack_require__(457);
 
 exports.default = angular.module('superdesk-ui.helper', ['superdesk-ui.helper.dropdown', 'superdesk-ui.helper.modal', 'superdesk-ui.helper.datepicker', 'superdesk-ui.helper.ngTagsInput']);
 
 /***/ }),
-/* 444 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74090,7 +74046,7 @@ angular.module('superdesk-ui.helper.dateparser', []).service('dateParser', ['$lo
 }]);
 
 /***/ }),
-/* 445 */
+/* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74309,7 +74265,7 @@ angular.module('superdesk-ui.helper.datepicker', ['superdesk-ui.helper.dateparse
     return {
         restrict: 'EA',
         replace: true,
-        template: __webpack_require__(446),
+        template: __webpack_require__(447),
         scope: {
             datepickerMode: '=?',
             dateDisabled: '&',
@@ -74331,7 +74287,7 @@ angular.module('superdesk-ui.helper.datepicker', ['superdesk-ui.helper.dateparse
     return {
         restrict: 'EA',
         replace: true,
-        template: __webpack_require__(447),
+        template: __webpack_require__(448),
         require: '^datepicker',
         link: function link(scope, element, attrs, ctrl) {
             scope.showWeeks = ctrl.showWeeks;
@@ -74450,7 +74406,7 @@ angular.module('superdesk-ui.helper.datepicker', ['superdesk-ui.helper.dateparse
     return {
         restrict: 'EA',
         replace: true,
-        template: __webpack_require__(448),
+        template: __webpack_require__(449),
         require: '^datepicker',
         link: function link(scope, element, attrs, ctrl) {
             ctrl.step = { years: 1 };
@@ -74507,7 +74463,7 @@ angular.module('superdesk-ui.helper.datepicker', ['superdesk-ui.helper.dateparse
     return {
         restrict: 'EA',
         replace: true,
-        template: __webpack_require__(449),
+        template: __webpack_require__(450),
         require: '^datepicker',
         link: function link(scope, element, attrs, ctrl) {
             var range = ctrl.yearRange;
@@ -74874,42 +74830,42 @@ angular.module('superdesk-ui.helper.datepicker', ['superdesk-ui.helper.dateparse
         restrict: 'EA',
         replace: true,
         transclude: true,
-        template: __webpack_require__(450)
+        template: __webpack_require__(451)
     };
 });
-
-/***/ }),
-/* 446 */
-/***/ (function(module, exports) {
-
-module.exports = "<div ng-switch=\"datepickerMode\" role=\"application\" ng-keydown=\"keydown($event)\">\n  <daypicker ng-switch-when=\"day\" tabindex=\"0\"></daypicker>\n  <monthpicker ng-switch-when=\"month\" tabindex=\"0\"></monthpicker>\n  <yearpicker ng-switch-when=\"year\" tabindex=\"0\"></yearpicker>\n</div>";
 
 /***/ }),
 /* 447 */
 /***/ (function(module, exports) {
 
-module.exports = "<table role=\"grid\" aria-labelledby=\"{{::uniqueId}}-title\" aria-activedescendant=\"{{activeDateId}}\">\n  <thead>\n    <tr>\n      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-left\" ng-click=\"move(-1)\" tabindex=\"-1\"><i class=\"icon-chevron-left-thin\"></i></button></th>\n      <th colspan=\"{{::5 + showWeeks}}\"><button id=\"{{::uniqueId}}-title\" role=\"heading\" aria-live=\"assertive\" aria-atomic=\"true\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"toggleMode()\" ng-disabled=\"datepickerMode === maxMode\" tabindex=\"-1\" style=\"width:100%;\"><strong>{{title}}</strong></button></th>\n      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-right\" ng-click=\"move(1)\" tabindex=\"-1\"><i class=\"icon-chevron-right-thin\"></i></button></th>\n    </tr>\n    <tr>\n      <th ng-if=\"showWeeks\" class=\"text-center\"></th>\n      <th ng-repeat=\"label in ::labels track by $index\" class=\"text-center\"><small aria-label=\"{{::label.full}}\">{{::label.abbr}}</small></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr ng-repeat=\"row in rows track by $index\">\n      <td ng-if=\"showWeeks\" class=\"text-center h6\"><em>{{ weekNumbers[$index] }}</em></td>\n      <td ng-repeat=\"dt in row track by dt.date\" class=\"text-center\" role=\"gridcell\" id=\"{{::dt.uid}}\" ng-class=\"::dt.customClass\">\n        <button type=\"button\" style=\"min-width:100%;\" class=\"btn btn-default btn-sm\" ng-class=\"{'btn-info': dt.selected, active: isActive(dt)}\" ng-click=\"select(dt.date)\" ng-disabled=\"dt.disabled\" tabindex=\"-1\"><span ng-class=\"::{'text-muted': dt.secondary, 'text-info': dt.current}\">{{::dt.label}}</span></button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n";
+module.exports = "<div ng-switch=\"datepickerMode\" role=\"application\" ng-keydown=\"keydown($event)\">\n  <daypicker ng-switch-when=\"day\" tabindex=\"0\"></daypicker>\n  <monthpicker ng-switch-when=\"month\" tabindex=\"0\"></monthpicker>\n  <yearpicker ng-switch-when=\"year\" tabindex=\"0\"></yearpicker>\n</div>";
 
 /***/ }),
 /* 448 */
 /***/ (function(module, exports) {
 
-module.exports = "<table role=\"grid\" aria-labelledby=\"{{::uniqueId}}-title\" aria-activedescendant=\"{{activeDateId}}\">\n  <thead>\n    <tr>\n      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-left\" ng-click=\"move(-1)\" tabindex=\"-1\"><i class=\"icon-chevron-left-thin\"></i></button></th>\n      <th><button id=\"{{::uniqueId}}-title\" role=\"heading\" aria-live=\"assertive\" aria-atomic=\"true\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"toggleMode()\" ng-disabled=\"datepickerMode === maxMode\" tabindex=\"-1\" style=\"width:100%;\"><strong>{{title}}</strong></button></th>\n      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-right\" ng-click=\"move(1)\" tabindex=\"-1\"><i class=\"icon-chevron-right-thin\"></i></button></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr ng-repeat=\"row in rows track by $index\">\n      <td ng-repeat=\"dt in row track by dt.date\" class=\"text-center\" role=\"gridcell\" id=\"{{::dt.uid}}\" ng-class=\"::dt.customClass\">\n        <button type=\"button\" style=\"min-width:100%;\" class=\"btn btn-default\" ng-class=\"{'btn-info': dt.selected, active: isActive(dt)}\" ng-click=\"select(dt.date)\" ng-disabled=\"dt.disabled\" tabindex=\"-1\"><span ng-class=\"::{'text-info': dt.current}\">{{::dt.label}}</span></button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n";
+module.exports = "<table role=\"grid\" aria-labelledby=\"{{::uniqueId}}-title\" aria-activedescendant=\"{{activeDateId}}\">\n  <thead>\n    <tr>\n      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-left\" ng-click=\"move(-1)\" tabindex=\"-1\"><i class=\"icon-chevron-left-thin\"></i></button></th>\n      <th colspan=\"{{::5 + showWeeks}}\"><button id=\"{{::uniqueId}}-title\" role=\"heading\" aria-live=\"assertive\" aria-atomic=\"true\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"toggleMode()\" ng-disabled=\"datepickerMode === maxMode\" tabindex=\"-1\" style=\"width:100%;\"><strong>{{title}}</strong></button></th>\n      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-right\" ng-click=\"move(1)\" tabindex=\"-1\"><i class=\"icon-chevron-right-thin\"></i></button></th>\n    </tr>\n    <tr>\n      <th ng-if=\"showWeeks\" class=\"text-center\"></th>\n      <th ng-repeat=\"label in ::labels track by $index\" class=\"text-center\"><small aria-label=\"{{::label.full}}\">{{::label.abbr}}</small></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr ng-repeat=\"row in rows track by $index\">\n      <td ng-if=\"showWeeks\" class=\"text-center h6\"><em>{{ weekNumbers[$index] }}</em></td>\n      <td ng-repeat=\"dt in row track by dt.date\" class=\"text-center\" role=\"gridcell\" id=\"{{::dt.uid}}\" ng-class=\"::dt.customClass\">\n        <button type=\"button\" style=\"min-width:100%;\" class=\"btn btn-default btn-sm\" ng-class=\"{'btn-info': dt.selected, active: isActive(dt)}\" ng-click=\"select(dt.date)\" ng-disabled=\"dt.disabled\" tabindex=\"-1\"><span ng-class=\"::{'text-muted': dt.secondary, 'text-info': dt.current}\">{{::dt.label}}</span></button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n";
 
 /***/ }),
 /* 449 */
 /***/ (function(module, exports) {
 
-module.exports = "<table role=\"grid\" aria-labelledby=\"{{::uniqueId}}-title\" aria-activedescendant=\"{{activeDateId}}\">\n  <thead>\n    <tr>\n      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-left\" ng-click=\"move(-1)\" tabindex=\"-1\"><i class=\"icon-chevron-left-thin\"></i></button></th>\n      <th colspan=\"3\"><button id=\"{{::uniqueId}}-title\" role=\"heading\" aria-live=\"assertive\" aria-atomic=\"true\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"toggleMode()\" ng-disabled=\"datepickerMode === maxMode\" tabindex=\"-1\" style=\"width:100%;\"><strong>{{title}}</strong></button></th>\n      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-right\" ng-click=\"move(1)\" tabindex=\"-1\"><i class=\"icon-chevron-right-thin\"></i></button></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr ng-repeat=\"row in rows track by $index\">\n      <td ng-repeat=\"dt in row track by dt.date\" class=\"text-center\" role=\"gridcell\" id=\"{{::dt.uid}}\">\n        <button type=\"button\" style=\"min-width:100%;\" class=\"btn btn-default\" ng-class=\"{'btn-info': dt.selected, active: isActive(dt)}\" ng-click=\"select(dt.date)\" ng-disabled=\"dt.disabled\" tabindex=\"-1\"><span ng-class=\"::{'text-info': dt.current}\">{{::dt.label}}</span></button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n";
+module.exports = "<table role=\"grid\" aria-labelledby=\"{{::uniqueId}}-title\" aria-activedescendant=\"{{activeDateId}}\">\n  <thead>\n    <tr>\n      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-left\" ng-click=\"move(-1)\" tabindex=\"-1\"><i class=\"icon-chevron-left-thin\"></i></button></th>\n      <th><button id=\"{{::uniqueId}}-title\" role=\"heading\" aria-live=\"assertive\" aria-atomic=\"true\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"toggleMode()\" ng-disabled=\"datepickerMode === maxMode\" tabindex=\"-1\" style=\"width:100%;\"><strong>{{title}}</strong></button></th>\n      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-right\" ng-click=\"move(1)\" tabindex=\"-1\"><i class=\"icon-chevron-right-thin\"></i></button></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr ng-repeat=\"row in rows track by $index\">\n      <td ng-repeat=\"dt in row track by dt.date\" class=\"text-center\" role=\"gridcell\" id=\"{{::dt.uid}}\" ng-class=\"::dt.customClass\">\n        <button type=\"button\" style=\"min-width:100%;\" class=\"btn btn-default\" ng-class=\"{'btn-info': dt.selected, active: isActive(dt)}\" ng-click=\"select(dt.date)\" ng-disabled=\"dt.disabled\" tabindex=\"-1\"><span ng-class=\"::{'text-info': dt.current}\">{{::dt.label}}</span></button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n";
 
 /***/ }),
 /* 450 */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"dropdown-menu\" ng-if=\"isOpen\" style=\"display: block\" ng-style=\"{top: position.top+'px', left: position.left+'px'}\" ng-keydown=\"keydown($event)\" ng-click=\"$event.stopPropagation()\">\n\t<li ng-transclude></li>\n\t<li ng-if=\"showButtonBar\" style=\"padding:10px 9px 2px\">\n\t\t<span class=\"btn-group pull-left\">\n\t\t\t<button type=\"button\" class=\"btn btn-sm btn-info\" ng-click=\"select('today')\">{{ getText('current') }}</button>\n\t\t\t<button type=\"button\" class=\"btn btn-sm btn-danger\" ng-click=\"select(null)\">{{ getText('clear') }}</button>\n\t\t</span>\n\t\t<button type=\"button\" class=\"btn btn-sm btn-success pull-right\" ng-click=\"close()\">{{ getText('close') }}</button>\n\t</li>\n</ul>\n";
+module.exports = "<table role=\"grid\" aria-labelledby=\"{{::uniqueId}}-title\" aria-activedescendant=\"{{activeDateId}}\">\n  <thead>\n    <tr>\n      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-left\" ng-click=\"move(-1)\" tabindex=\"-1\"><i class=\"icon-chevron-left-thin\"></i></button></th>\n      <th colspan=\"3\"><button id=\"{{::uniqueId}}-title\" role=\"heading\" aria-live=\"assertive\" aria-atomic=\"true\" type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"toggleMode()\" ng-disabled=\"datepickerMode === maxMode\" tabindex=\"-1\" style=\"width:100%;\"><strong>{{title}}</strong></button></th>\n      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-right\" ng-click=\"move(1)\" tabindex=\"-1\"><i class=\"icon-chevron-right-thin\"></i></button></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr ng-repeat=\"row in rows track by $index\">\n      <td ng-repeat=\"dt in row track by dt.date\" class=\"text-center\" role=\"gridcell\" id=\"{{::dt.uid}}\">\n        <button type=\"button\" style=\"min-width:100%;\" class=\"btn btn-default\" ng-class=\"{'btn-info': dt.selected, active: isActive(dt)}\" ng-click=\"select(dt.date)\" ng-disabled=\"dt.disabled\" tabindex=\"-1\"><span ng-class=\"::{'text-info': dt.current}\">{{::dt.label}}</span></button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n";
 
 /***/ }),
 /* 451 */
+/***/ (function(module, exports) {
+
+module.exports = "<ul class=\"dropdown-menu\" ng-if=\"isOpen\" style=\"display: block\" ng-style=\"{top: position.top+'px', left: position.left+'px'}\" ng-keydown=\"keydown($event)\" ng-click=\"$event.stopPropagation()\">\n\t<li ng-transclude></li>\n\t<li ng-if=\"showButtonBar\" style=\"padding:10px 9px 2px\">\n\t\t<span class=\"btn-group pull-left\">\n\t\t\t<button type=\"button\" class=\"btn btn-sm btn-info\" ng-click=\"select('today')\">{{ getText('current') }}</button>\n\t\t\t<button type=\"button\" class=\"btn btn-sm btn-danger\" ng-click=\"select(null)\">{{ getText('clear') }}</button>\n\t\t</span>\n\t\t<button type=\"button\" class=\"btn btn-sm btn-success pull-right\" ng-click=\"close()\">{{ getText('close') }}</button>\n\t</li>\n</ul>\n";
+
+/***/ }),
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75252,7 +75208,7 @@ angular.module('superdesk-ui.helper.dropdown', ['superdesk-ui.helper.position'])
 });
 
 /***/ }),
-/* 452 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75319,7 +75275,7 @@ angular.module('superdesk-ui.helper.modal', []).factory('$$stackedMap', function
     return {
         restrict: 'EA',
         replace: true,
-        template: __webpack_require__(453),
+        template: __webpack_require__(454),
         compile: function compile(tElement, tAttrs) {
             tElement.addClass(tAttrs.backdropClass);
             return linkFn;
@@ -75346,7 +75302,7 @@ angular.module('superdesk-ui.helper.modal', []).factory('$$stackedMap', function
         //            templateUrl: function templateUrl(tElement, tAttrs) {
         //                return tAttrs.templateUrl || '../app/template/window.html';
         //            },
-        template: __webpack_require__(454),
+        template: __webpack_require__(455),
         link: function link(scope, element, attrs) {
             element.addClass(attrs.windowClass || '');
             scope.size = attrs.size;
@@ -75723,19 +75679,19 @@ angular.module('superdesk-ui.helper.modal', []).factory('$$stackedMap', function
 });
 
 /***/ }),
-/* 453 */
+/* 454 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"modal__backdrop fade in\"></div>";
 
 /***/ }),
-/* 454 */
+/* 455 */
 /***/ (function(module, exports) {
 
 module.exports = "<div modal-render=\"{{$isRendered}}\" tabindex=\"-1\" role=\"dialog\" class=\"modal\"\n     modal-animation-class=\"fade\"\n     modal-in-class=\"in\"\n     ng-style=\"{'z-index': 1050 + index * 10, display: 'block'}\"\n     ng-class=\"size ? 'modal--' + size : ''\">\n    <div class=\"modal__dialog\">\n        <div class=\"modal__content\" modal-transclude></div>\n    </div>\n</div>\n";
 
 /***/ }),
-/* 455 */
+/* 456 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75898,7 +75854,7 @@ angular.module('superdesk-ui.helper.position', [])
 }]);
 
 /***/ }),
-/* 456 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77124,7 +77080,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 })();
 
 /***/ }),
-/* 457 */
+/* 458 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77141,7 +77097,7 @@ function CarouselDirective() {
             finish: '&',
             model: '='
         },
-        template: __webpack_require__(458),
+        template: __webpack_require__(459),
         transclude: true,
         controllerAs: 'ctrl',
         controller: ['$scope', '$document', function ($scope, $document) {
@@ -77263,13 +77219,13 @@ function CarouselStepDirective() {
 angular.module('superdesk-ui.carousel', []).directive('sdCarousel', CarouselDirective).directive('sdCarouselStep', CarouselStepDirective);
 
 /***/ }),
-/* 458 */
+/* 459 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"sd-carousel__backdrop\"></div>\n<div class=\"sd-carousel\">\n    <div class=\"sd-carousel__dialog\">\n        <div class=\"sd-carousel__content\" ng-transclude></div>\n        <a class=\"sd-carousel__nav-button sd-carousel__nav-button--prev\" ng-click=\"ctrl.previous()\" ng-hide=\"pageIndex === 0\"></a>\n        <a class=\"sd-carousel__nav-button\" ng-click=\"pageIndex === steps.length-1 ? ctrl.finish() : ctrl.next()\" ng-class=\"pageIndex === steps.length-1 ? 'sd-carousel__nav-button--end' : 'sd-carousel__nav-button--next'\"></a>\n        <div class=\"sd-carousel__page-indication-bar\">\n            <span ng-repeat=\"step in steps\" \n                  class=\"sd-carousel__page-indicator\" \n                  ng-class=\"{'sd-carousel__page-indicator--selected': step.selected}\"\n                  ng-click=\"goTo(step)\">\n            </span>\n        </div>\n    </div>\n</div>";
 
 /***/ }),
-/* 459 */
+/* 460 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77372,7 +77328,7 @@ function sdCheck($parse) {
 angular.module('superdesk-ui.check', []).directive('sdCheck', sdCheck);
 
 /***/ }),
-/* 460 */
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77552,7 +77508,7 @@ angular.module("superdesk-ui.dropdown", []).directive("dropdown", sdDropdown).di
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
 
 /***/ }),
-/* 461 */
+/* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77626,7 +77582,7 @@ function sdModal($document, $rootScope) {
 angular.module('superdesk-ui.modals', []).directive('sdModal', sdModal);
 
 /***/ }),
-/* 462 */
+/* 463 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77711,7 +77667,7 @@ function sdSwitch() {
 angular.module('superdesk-ui.switch', []).directive('sdSwitch', sdSwitch);
 
 /***/ }),
-/* 463 */
+/* 464 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77749,7 +77705,7 @@ function ToggleBoxDirective() {
 angular.module('superdesk-ui.toggleBox', []).directive('sdToggleBox', ToggleBoxDirective);
 
 /***/ }),
-/* 464 */
+/* 465 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77784,7 +77740,7 @@ function WizardHandlerFactory() {
 WizardDirective.$inject = [];
 function WizardDirective() {
     return {
-        template: __webpack_require__(465),
+        template: __webpack_require__(466),
         scope: {
             currentStep: '=',
             finish: '&',
@@ -77888,7 +77844,7 @@ function WizardDirective() {
 WizardStepDirective.$inject = [];
 function WizardStepDirective() {
     return {
-        template: __webpack_require__(466),
+        template: __webpack_require__(467),
         scope: {
             title: '@',
             code: '@',
@@ -77906,19 +77862,19 @@ function WizardStepDirective() {
 angular.module('superdesk-ui.wizard', []).factory('WizardHandler', WizardHandlerFactory).directive('sdWizard', WizardDirective).directive('sdWizardStep', WizardStepDirective);
 
 /***/ }),
-/* 465 */
+/* 466 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"modal__body-header\">\n    <ul class=\"nav-tabs\">\n        <li ng-repeat=\"step in steps\" ng-class=\"{'nav-tabs__tab--active': step.selected}\" class=\"nav-tabs__tab\">\n            <button\n                ng-click=\"goTo(step)\"\n                ng-disabled=\"step.disabled\"\n                ng-hide=\"step.hide\"\n                class=\"nav-tabs__link\"\n                data-test-id=\"wizard--{{step.title}}\"\n            >\n                {{ step.title}}\n            </button>\n        </li>\n    </ul>\n</div>\n<div class=\"modal__body-content\" ng-transclude></div>";
 
 /***/ }),
-/* 466 */
+/* 467 */
 /***/ (function(module, exports) {
 
 module.exports = "<div ng-show=\"selected\" class=\"modal-screen\" ng-transclude></div>\r\n";
 
 /***/ }),
-/* 467 */
+/* 468 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77947,7 +77903,7 @@ function TagInputDirective($q) {
             maxResultsToShow: '='
         },
         require: '?ngModel',
-        template: __webpack_require__(468),
+        template: __webpack_require__(469),
         link: function link(scope) {
             scope.loadTags = function (query) {
                 return $q(function (resolve, reject) {
@@ -77965,13 +77921,13 @@ function TagInputDirective($q) {
 angular.module('superdesk-ui.tags', []).directive('sdTagInput', TagInputDirective);
 
 /***/ }),
-/* 468 */
+/* 469 */
 /***/ (function(module, exports) {
 
 module.exports = "<label class=\"tags-input__label\" ng-if=\"label\">{{label}}</label>\n<tags-input ng-model=\"model\"\n    add-from-autocomplete-only=\"{{items ? !freetext : false}}\"\n    show-button=\"{{!!items}}\"\n    display-property=\"{{field}}\"\n    key-property=\"{{keyProperty}}\"\n    use-strings=\"{{!field}}\"\n    ng-required=\"required\"\n    on-tag-added=\"onChange($tag)\"\n    on-tag-removed=\"onChange($tag)\"\n    replace-spaces-with-dashes=\"{{replaceSpacesWithDashes}}\"\n    min-length=\"{{minLength}}\"\n    max-length=\"{{maxLength}}\"\n    max-tags=\"{{maxTags}}\"\n    max-items=\"{{maxItems}}\"\n    boxed={{boxed}}\n    placeholder=\"{{placeholder}}\">\n\n    <auto-complete ng-if=\"items\"\n        source=\"loadTags($query)\"\n        load-on-empty=\"true\"\n        min-length=\"{{minLength}}\"\n        display-property=\"{{field}}\"\n        key-property=\"{{keyProperty}}\"\n        max-results-to-show=\"{{maxResultsToShow}}\">\n    </auto-complete>\n</tags-input>\n";
 
 /***/ }),
-/* 469 */
+/* 470 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77988,7 +77944,7 @@ module.exports = "<label class=\"tags-input__label\" ng-if=\"label\">{{label}}</
  */
 function LineInputDirective() {
     return {
-        template: __webpack_require__(470),
+        template: __webpack_require__(471),
         replace: true,
         transclude: true,
         require: '?ngModel',
@@ -78030,13 +77986,13 @@ function LineInputDirective() {
 angular.module('superdesk-ui.lineInput', []).directive('sdLineInput', LineInputDirective);
 
 /***/ }),
-/* 470 */
+/* 471 */
 /***/ (function(module, exports) {
 
 module.exports = " <div class=\"sd-line-input\" ng-class=\"{'sd-line-input--dark-ui': dark, 'sd-line-input--boxed': boxed, 'sd-line-input--required': required}\">\n    <label class=\"sd-line-input__label\" translate>{{label}}</label>\n\n    <input class=\"sd-line-input__input\" type=\"text\" ng-model=\"modelFixed.value\" ng-change=\"update(modelFixed.value)\" ng-blur=\"onblur()\" ng-disabled=\"disabled\" placeholder=\"{{placeholder}}\" ng-if=\"!transclude && !textarea\">\n\n    <textarea class=\"sd-line-input__input\"\n        ng-model=\"modelFixed.value\"\n        ng-change=\"update(modelFixed.value)\"\n        ng-blur=\"onblur()\"\n        ng-disabled=\"disabled\"\n        placeholder=\"{{placeholder}}\"\n        ng-if=\"textarea\"\n        sd-auto-height>\n    </textarea>\n\n    <ng-transclude></ng-transclude>\n    <div class=\"sd-line-input__char-count\" ng-if=\"maxlength\" sd-character-count data-item=\"modelFixed.value\" data-limit=\"maxlength\" data-html=\"true\"></div>\n</div>\n";
 
 /***/ }),
-/* 471 */
+/* 472 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78056,7 +78012,7 @@ module.exports = " <div class=\"sd-line-input\" ng-class=\"{'sd-line-input--dark
  */
 function SearchHandlerDirective() {
     return {
-        template: __webpack_require__(472),
+        template: __webpack_require__(473),
         replace: true,
         transclude: true,
         require: '?ngModel',
@@ -78082,13 +78038,13 @@ function SearchHandlerDirective() {
 angular.module('superdesk-ui.searchHandler', []).directive('sdSearchHandler', SearchHandlerDirective);
 
 /***/ }),
-/* 472 */
+/* 473 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"flat-searchbar\" ng-class=\"{extended: extended}\">\n    <div class=\"search-handler\" ng-class=\"{'search-handler--left-border': borderleft}\">\n        <label for=\"search-input\" class=\"trigger-icon\" ng-click=\"extended = !extended\"><i class=\"icon-search\"></i></label>\n        <input id=\"search-input\" type=\"text\" placeholder=\"{{ :: label || 'Search' }}\" ng-model=\"model\" ng-model-options=\"{debounce: debounce}\">\n        <button class=\"search-close\" ng-if=\"model.length\" ng-click=\"clearInput()\" ng-class=\"{visible: model.length}\"><i class=\"icon-remove-sign\"></i></button>\n\n        <button class=\"search-close\" ng-if=\"button && model.length\" ng-click=\"\" ng-class=\"{visible: button && model.length}\">\n            <i class=\"big-icon--chevron-right\"></i>\n        </button>\n    </div>\n</div>\n";
 
 /***/ }),
-/* 473 */
+/* 474 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78104,7 +78060,7 @@ function sdCircularProgress() {
             error: '=',
             counter: '='
         },
-        template: __webpack_require__(474),
+        template: __webpack_require__(475),
         link: function link(scope, element) {
             var elem = $(element).find('.progress-svg');
 
@@ -78150,13 +78106,13 @@ angular.module('superdesk-ui.circularProgress', []).directive('sdCircularProgres
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
 
 /***/ }),
-/* 474 */
+/* 475 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"progress-bar-container\">\n    <div  class=\"progress-done\" ng-class=\"{'progress-done--completed': status === 'completed', 'progress-done--error': status === 'error'}\">\n        <i class=\"icon-ok\" ng-hide=\"status === 'error'\"></i>\n        <i class=\"icon-close-small\" ng-hide=\"status === 'completed'\"></i>\n    </div>\n    <span class=\"progress-text\" ng-if=\"counter\">{{value}}<em>%</em></span>\n    <svg class=\"progress-svg\">\n        <circle ng-attr-r=\"{{radius}}\" ng-attr-cx=\"50%\" ng-attr-cy=\"50%\"></circle>\n        <circle class=\"progressbar\" ng-attr-r=\"{{radius}}\" ng-attr-cx=\"50%\" ng-attr-cy=\"50%\" ng-style=\"{'stroke-dashoffset': dashOffset, 'stroke-dasharray': circumference}\"></circle>\n    </svg>\n</div>";
 
 /***/ }),
-/* 475 */
+/* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78201,7 +78157,7 @@ function SplitterDirective($window) {
 angular.module('superdesk-ui.splitter', []).directive('sdSplitter', SplitterDirective);
 
 /***/ }),
-/* 476 */
+/* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78242,16 +78198,16 @@ function MediaQuery($window) {
 angular.module('superdesk-ui.mediaQuery', []).directive('sdMediaQuery', MediaQuery);
 
 /***/ }),
-/* 477 */
+/* 478 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(478);
+__webpack_require__(479);
 
 /***/ }),
-/* 478 */
+/* 479 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

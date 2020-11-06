@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { CalendarProps } from 'primereact/calendar';
+import { LocaleSettings, CalendarProps } from 'primereact/calendar';
+export declare type DatePickerLocaleSettings = Omit<LocaleSettings, 'today' | 'clear'>;
 interface IDatePickerBase {
     disabled?: boolean;
     dateFormat: string;
@@ -7,6 +8,7 @@ interface IDatePickerBase {
         days: number;
         label: string;
     }>;
+    locale?: DatePickerLocaleSettings;
 }
 interface IDatePicker extends IDatePickerBase {
     value: Date | null;
